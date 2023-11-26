@@ -1,0 +1,59 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class EnemiShot : MonoBehaviour
+{
+    public Transform player_pos;
+    public float speed;
+    public float distancia_frenando;
+    public float distancia_retraso;
+
+    public Transform punto_instancia;
+    public GameObject bala;
+    private float tiempo;
+    void Start()
+    {
+        player_pos = GameObject.Find("Player").transform;
+    }
+
+    private void Update()
+    {
+        //MOVIMIENTO
+        #region
+        if (Vector2.Distance(transform.position, player_pos.position)> distancia_frenando)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, player_pos.position, speed * Time.deltaTime);
+        }
+        if (Vector2.Distance(transform.position, player_pos.position) < distancia_retraso)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, player_pos.position, -speed * Time.deltaTime);
+        }
+        if (Vector2.Distance(transform.position, player_pos.position) < distancia_frenando&& Vector2.Distance(transform.position, player_pos.position) > distancia_retraso)
+        {
+            transform.position=transform.position;
+        }
+        #endregion
+        //FLIP
+        #region
+        if (player_pos.position.x > this.transform.position.x)
+        {
+            this.transform.localScale = new Vector2(4, 4);
+        }
+        else
+        {
+            this.transform.localScale = new Vector2(-4, 4);
+        }
+        #endregion
+        //disparo
+        #region
+        tiempo += Time.deltaTime;
+        if (tiempo >= 2)
+        {
+            Instantiate(bala, punto_instancia.position, Quaternion.identity);
+            tiempo = 0;
+        }
+        #endregion
+
+    }
+}
