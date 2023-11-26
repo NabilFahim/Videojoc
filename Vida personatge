@@ -1,0 +1,40 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class VidaPersonaje : MonoBehaviour
+    
+{
+    private void Start()
+    {
+       
+    }
+
+    
+    void Update()
+    {
+        // Lógica de movimiento del personaje y detección de salto
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            // Lógica para el salto del personaje
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            // Verifica si el personaje está por encima del enemigo y lo elimina
+            if (transform.position.y > collision.transform.position.y)
+            {
+                Destroy(collision.gameObject); // Destruye el enemigo
+            }
+        }
+    }
+
+    internal void Morir()
+    {
+        throw new NotImplementedException();
+    }
+}
